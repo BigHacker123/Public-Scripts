@@ -6,7 +6,7 @@ if not syn or not protectgui then getgenv().protectgui = function() end end
 Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/Jonathan-2k/Module/main/UI%20Main"))()
 ThemeManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/Mainstreamed/Linoria/main/ThemeManager.lua"))()
 SaveManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/Mainstreamed/Linoria/main/SaveManager.lua"))()
-esp = loadstring(game:HttpGet("https://raw.githubusercontent.com/Jonathan-2k/Module/main/esp%20lol.lua"))()
+esp = loadstring(game:HttpGet("https://raw.githubusercontent.com/Jonathan-2k/Dependencies/main/Crumbleware%20ESP"))()
 
 --Variables
 local CrumbleWare = 1.25
