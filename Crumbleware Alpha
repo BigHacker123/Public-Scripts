@@ -8,6 +8,8 @@ ThemeManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/Mainst
 SaveManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/Mainstreamed/Linoria/main/SaveManager.lua"))()
 esp = loadstring(game:HttpGet("https://raw.githubusercontent.com/Jonathan-2k/Dependencies/main/Crumbleware%20ESP"))()
 
+Library:Notify("Script Loaded!, Press End To Open! Made By Yellow_FireFighter#3625")
+
 --Variables
 local CrumbleWare = 1.25
 local resume = coroutine.resume
