@@ -1,0 +1,36 @@
+local Player = game.Players.LocalPlayer
+local ZombieFolder = game:GetService("Workspace").Ignore.Zombies
+ZombieTotal = 0
+
+coroutine.resume(coroutine.create(function()
+    while task.wait(0.1) do
+        local Zombies = 0
+        for i,v in pairs(ZombieFolder:GetChildren()) do
+            Root = Player.Character:FindFirstChild("HumanoidRootPart")
+            ZomRoot = v:FindFirstChild("HumanoidRootPart")
+            if Root and ZomRoot then
+                Mag = (Root.Position - ZomRoot.Position).Magnitude
+                Humanoid = v:FindFirstChild("Humanoid")
+                if Mag and Mag < 200 and Humanoid and Humanoid.Health > 0 then
+                    ZombieTotal = ZombieTotal + 1
+                    local Zombies = Zombies + 1
+                    game:GetService("ReplicatedStorage").Framework.Remotes.KnifeHitbox:FireServer(unpack({[1] = Humanoid}))
+                end
+            end
+        end
+        if Zombies == 0 and Root then
+            Root.CFrame = CFrame.new(100,100,100)
+        end
+    end
+end))
+
+while task.wait() do
+    for i,v in pairs(ZombieFolder:GetChildren()) do
+        local Hum1 = Player.Character:FindFirstChild("HumanoidRootPart")
+        local Hum2 = v:FindFirstChild("HumanoidRootPart")
+        local EnemyHum = v:FindFirstChild("Humanoid")
+        if v and Hum1 and Hum2 and EnemyHum and EnemyHum.Health > 0 then
+            Hum1.CFrame = Hum2.CFrame - Vector3.new(0,10,0)
+        end
+    end
+end
