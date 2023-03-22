@@ -1,6 +1,33 @@
 local Player = game.Players.LocalPlayer
 local ZombieFolder = game:GetService("Workspace").Ignore.Zombies
 ZombieTotal = 0
+active = true
+alreadydiddumbdumb = false
+OldPos = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
+
+local GC = getconnections or get_signal_cons
+if GC then
+	for i,v in pairs(GC(game.Players.LocalPlayer.Idled)) do
+		if v["Disable"] then
+			v["Disable"](v)
+		elseif v["Disconnect"] then
+			v["Disconnect"](v)
+		end
+	end
+else
+	game.Players.LocalPlayer.Idled:Connect(function()
+		local VirtualUser = game:GetService("VirtualUser")
+		VirtualUser:CaptureController()
+		VirtualUser:ClickButton2(Vector2.new())
+	end)
+end
+
+game:GetService("UserInputService").InputBegan:Connect(function(Input)
+    if Input.KeyCode == Enum.KeyCode.Z then
+        active = not active
+        alreadydiddumbdumb = false
+    end
+end)
 
 coroutine.resume(coroutine.create(function()
     while task.wait(0.1) do
@@ -8,7 +35,7 @@ coroutine.resume(coroutine.create(function()
         for i,v in pairs(ZombieFolder:GetChildren()) do
             Root = Player.Character:FindFirstChild("HumanoidRootPart")
             ZomRoot = v:FindFirstChild("HumanoidRootPart")
-            if Root and ZomRoot then
+            if Root and ZomRoot and active == true then
                 Mag = (Root.Position - ZomRoot.Position).Magnitude
                 Humanoid = v:FindFirstChild("Humanoid")
                 if Mag and Mag < 200 and Humanoid and Humanoid.Health > 0 then
@@ -18,7 +45,7 @@ coroutine.resume(coroutine.create(function()
                 end
             end
         end
-        if Zombies == 0 and Root then
+        if Zombies == 0 and Root and active then
             Root.CFrame = CFrame.new(100,100,100)
         end
     end
@@ -29,8 +56,12 @@ while task.wait() do
         local Hum1 = Player.Character:FindFirstChild("HumanoidRootPart")
         local Hum2 = v:FindFirstChild("HumanoidRootPart")
         local EnemyHum = v:FindFirstChild("Humanoid")
-        if v and Hum1 and Hum2 and EnemyHum and EnemyHum.Health > 0 then
+        if v and Hum1 and Hum2 and EnemyHum and EnemyHum.Health > 0 and active == true then
             Hum1.CFrame = Hum2.CFrame - Vector3.new(0,10,0)
         end
+    end
+    if active == false and not alreadydiddumbdumb then
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = OldPos
+        alreadydiddumbdumb = true
     end
 end
